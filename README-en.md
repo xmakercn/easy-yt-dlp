@@ -288,6 +288,12 @@ pip install -U "yt-dlp[default,curl-cffi]"
 
 ## 📅 What's New
 
+### v1.0.1 · 2026-09-06
+
+- ✨ **Playlist downloads auto-sorted into folders**: Options `[2]`-`[4]` (download entire playlist / range / specific items) now automatically create a folder named after the **playlist title** in the save directory, and all files from that playlist are placed into it
+- Implemented via a temporary command-line argument only: does not affect downloads of other URLs such as option `[1]` (single video), and is never written to any config file
+- Re-downloading the same playlist reuses the existing folder automatically
+
 ### v1.0.0 · 2026-05-08
 
 - 🎉 First public release
