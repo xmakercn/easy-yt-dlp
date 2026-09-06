@@ -10,7 +10,7 @@ build/
 .eggs/
 pip-wheel-metadata/
 other-dev/
-
+.workbuddy/
 # Virtual environments
 .venv/
 venv/

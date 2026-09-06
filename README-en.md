@@ -136,6 +136,8 @@ After launch, current Profile info is displayed, then main menu:
 | `8`    | Update yt-dlp to latest version                          |
 | `9`    | Exit                                                     |
 
+> **Note**: Options `[2]`-`[4]` (playlist downloads: entire playlist / range / specific items) automatically create a folder named after the **playlist title** in the save directory, and all files from that playlist are downloaded into it. This is done via a temporary command-line argument: it only affects the current playlist URL, does not affect downloads of other URLs (e.g. option `[1]`), and is never written to any config file.
+
 ---
 
 ## 🗂️ Profile System
@@ -264,7 +266,7 @@ Full parameter list: [yt-dlp official documentation](https://github.com/yt-dlp/y
 
 | Parameter                          | Reason                                 |
 | ---------------------------------- | -------------------------------------- |
-| `--output`                         | Managed by menu option `[7]`           |
+| `--output`                         | Managed by menu option `[7]`; temporarily overridden (not persisted) by options `[2]`-`[4]` to the "save dir/playlist title/" subfolder for playlist downloads |
 | `--ffmpeg-location`                | Auto-configured by installation script |
 | `--no-playlist` / `--yes-playlist` | Auto-controlled by menu options 1-4    |
 | `--playlist-items`                 | Auto-passed by menu options 3/4        |
