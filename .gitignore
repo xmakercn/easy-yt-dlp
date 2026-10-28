@@ -48,6 +48,7 @@ ffprobe
 # Logs
 *.log
 logs/
+DEVLOG.md
 
 # Testing & Coverage
 .coverage
