@@ -40,6 +40,7 @@ translations = {
     "path_updated": "Save path updated to: {path}",
     "updating": "Updating...",
     "update_complete": "Update complete!",
+    "update_failed": "Update failed! Please check network or proxy settings.",
     "press_enter": "Press Enter to continue...",
     "exiting": "Exiting...",
     "invalid_choice": "Invalid option, please try again!",

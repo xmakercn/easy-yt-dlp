@@ -40,6 +40,7 @@ translations = {
     "path_updated": "下载路径已更新为：{path}",
     "updating": "正在更新...",
     "update_complete": "更新完成！",
+    "update_failed": "更新失败，请检查网络或代理设置！",
     "press_enter": "按回车键继续...",
     "exiting": "正在退出...",
     "invalid_choice": "无效选项，请重新输入！",

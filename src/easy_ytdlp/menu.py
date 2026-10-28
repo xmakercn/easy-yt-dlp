@@ -223,8 +223,10 @@ def run_menu() -> None:
                 print(colored(t("path_updated", path=path) + "\n", "green"))
             elif choice == "8":
                 print(colored(t("updating"), "yellow"))
-                update_ytdlp()
-                print(colored(t("update_complete"), "green"))
+                if update_ytdlp():
+                    print(colored(t("update_complete"), "green"))
+                else:
+                    print(colored(t("update_failed"), "red"))
                 input(t("press_enter"))
             elif choice == "9":
                 print(colored(t("exiting"), "yellow"))

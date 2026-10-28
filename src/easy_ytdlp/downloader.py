@@ -1,5 +1,7 @@
+import sys
 import subprocess
-from .platform_utils import find_executable
+from pathlib import Path
+from .platform_utils import find_executable, get_tool_dir
 from .config import get_conf_path, read_output_path, read_proxy
 
 _KEEP_AUDIO_ARGS = ["--extract-audio", "--keep-video", "--audio-format", "m4a"]
@@ -55,9 +57,64 @@ def download_playlist_items(url: str, items_str: str, keep_audio: bool = False) 
     _run(url, _playlist_download_args() + ["--playlist-items", items_str], keep_audio=keep_audio)
 
 
-def update_ytdlp() -> None:
+def is_pip_ytdlp(cmd: str | None = None) -> bool:
+    """Determine whether yt-dlp is installed as a Python package via pip.
+
+    According to official yt-dlp update policy:
+    - Standalone binary builds (pyinstaller/exe) can self-update via 'yt-dlp -U'.
+    - Pip/wheel packages cannot self-update via '-U' and must be updated via pip.
+    """
+    tool_dir = get_tool_dir()
+    suffix = ".exe" if sys.platform == "win32" else ""
+    local_binary = tool_dir / ("yt-dlp" + suffix)
+
+    # Standalone executable placed in tool dir (~/.easy-ytdlp/)
+    if local_binary.is_file() and cmd and Path(cmd).resolve() == local_binary.resolve():
+        return False
+
+    try:
+        import yt_dlp.version
+        if getattr(yt_dlp.version, "VARIANT", None) == "pip":
+            return True
+        if "pip" in getattr(yt_dlp.version, "UPDATE_HINT", "").lower():
+            return True
+    except Exception:
+        pass
+
+    if cmd:
+        cmd_path = Path(cmd).resolve()
+        py_prefix = Path(sys.prefix).resolve()
+        try:
+            if cmd_path.is_relative_to(py_prefix):
+                return True
+        except (AttributeError, ValueError):
+            pass
+
+    return False
+
+
+def update_ytdlp() -> bool:
     proxy = read_proxy()
-    cmd = [get_ytdlp_cmd(), "-U"]
+    cmd = get_ytdlp_cmd()
+
+    if is_pip_ytdlp(cmd):
+        pip_cmd = [sys.executable, "-m", "pip", "install", "-U", "yt-dlp[default,curl-cffi]"]
+        if proxy:
+            pip_cmd += ["--proxy", proxy]
+        res = subprocess.run(pip_cmd)
+        return res.returncode == 0
+
+    # Standalone binary release update
+    update_cmd = [cmd, "-U"]
     if proxy:
-        cmd += ["--proxy", proxy]
-    subprocess.run(cmd)
+        update_cmd += ["--proxy", proxy]
+    res = subprocess.run(update_cmd)
+    if res.returncode == 0:
+        return True
+
+    # Fallback: if standalone update failed, attempt update via pip
+    pip_cmd = [sys.executable, "-m", "pip", "install", "-U", "yt-dlp[default,curl-cffi]"]
+    if proxy:
+        pip_cmd += ["--proxy", proxy]
+    fallback_res = subprocess.run(pip_cmd)
+    return fallback_res.returncode == 0
