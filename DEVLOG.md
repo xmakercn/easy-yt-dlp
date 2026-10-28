@@ -25,3 +25,26 @@
 
 ### 4. Git 提交信息
 - **Commit Message**：`fix(downloader): adapt to yt-dlp update policy for pip installations`
+
+---
+
+## [2026-10-28 10:18] 发布 v1.0.2 版本并初始化版本变更日志
+
+### 1. 任务目标与需求摘要
+- **任务目标**：将本次变更记录到 `docs/version-log.md` 规范版本日志中，更新项目版本号至 `1.0.2`，在 Git 仓库创建 `v1.0.2` 标签，并建立“后续每次更新同步维护 `docs/version-log.md` 与 Git 标签”的流程。
+
+### 2. 核心变更清单
+- **模块/文件路径**：
+  - `docs/version-log.md`：新建版本变更日志，整理并归档 `v1.0.0`、`v1.0.1` 及本次 `v1.0.2` 的详细变更说明；
+  - `src/easy_ytdlp/__init__.py`：将 `__version__` 升级至 `"1.0.2"`；
+  - `README.md`、`README-en.md`：在“最新动态”/“What's New”中增加 `v1.0.2` 更新说明，并添加指向 `docs/version-log.md` 的链接；
+  - Git Tag：发布并打上 `v1.0.2` 附注标签。
+
+### 3. 测试验证结果
+- **版本号检查**：执行 `python -c "import easy_ytdlp; print(easy_ytdlp.__version__)"` 输出 `1.0.2`；
+- **菜单显示检查**：主菜单标题栏正确输出 `Easy yt-dlp: v1.0.2`；
+- **文档链接检查**：`docs/version-log.md` 格式规范且索引完整。
+
+### 4. Git 提交信息
+- **Commit Message**：`chore(release): bump version to v1.0.2 and add docs/version-log.md`
+- **Git Tag**：`v1.0.2`

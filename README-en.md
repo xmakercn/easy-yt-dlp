@@ -288,6 +288,12 @@ pip install -U "yt-dlp[default,curl-cffi]"
 
 ## 📅 What's New
 
+### v1.0.2 · 2026-10-28
+
+- 🐛 **Adapt to yt-dlp update policy**: Intelligently detect whether yt-dlp was installed via pip or standalone binary; update via `pip` when installed with pip and via `-U` when using standalone binaries
+- ⚡ **Accurate update feedback**: Fix false positive "Update complete!" on errors; report localized error status on failure
+- 📖 **New Version Changelog**: Added [`docs/version-log.md`](docs/version-log.md)
+
 ### v1.0.1 · 2026-09-06
 
 - ✨ **Playlist downloads auto-sorted into folders**: Options `[2]`-`[4]` (download entire playlist / range / specific items) now automatically create a folder named after the **playlist title** in the save directory, and all files from that playlist are placed into it
