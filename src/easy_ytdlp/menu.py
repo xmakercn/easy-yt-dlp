@@ -12,6 +12,7 @@ from .downloader import (
     download_single, download_playlist, download_playlist_range,
     download_playlist_items, update_ytdlp, get_ytdlp_cmd,
 )
+from .updater import update_self, restart_app
 from .i18n import t
 
 
@@ -71,6 +72,7 @@ def show_menu(keep_audio: bool) -> None:
         ("6", "menu_6"),
         ("7", "menu_7"),
         ("8", "menu_8"),
+        ("0", "menu_0"),
         ("9", "menu_9"),
     ]:
         if key == "menu_5":
@@ -195,7 +197,16 @@ def run_menu() -> None:
         show_menu(keep_audio)
         try:
             choice = input(f"\n{t('input_choice')}: ").strip()
-            if choice == "1":
+            if choice == "0":
+                print(colored(t("updating_self"), "yellow"))
+                if update_self():
+                    print(colored(t("update_self_complete"), "green"))
+                    print(colored(t("restarting_app"), "cyan"))
+                    input(t("press_enter"))
+                    restart_app()
+                else:
+                    input(t("press_enter"))
+            elif choice == "1":
                 download_single(input_url(), keep_audio=keep_audio)
                 print(colored(f"\n{t('download_complete')}\n", "green"))
             elif choice == "2":

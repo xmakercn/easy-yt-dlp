@@ -4,12 +4,20 @@ import platform
 import shutil
 from pathlib import Path
 
-# Enable ANSI on Windows
+# Enable ANSI and UTF-8 output on Windows
 if sys.platform == "win32":
     import ctypes
-    ctypes.windll.kernel32.SetConsoleMode(
-        ctypes.windll.kernel32.GetStdHandle(-11), 7
-    )
+    try:
+        ctypes.windll.kernel32.SetConsoleMode(
+            ctypes.windll.kernel32.GetStdHandle(-11), 7
+        )
+        ctypes.windll.kernel32.SetConsoleOutputCP(65001)
+    except Exception:
+        pass
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 _COLORS = {"red": "31", "green": "32", "yellow": "33", "cyan": "36"}
 

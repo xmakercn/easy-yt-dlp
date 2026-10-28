@@ -288,6 +288,10 @@ pip install -U "yt-dlp[default,curl-cffi]"
 
 ## 📅 What's New
 
+### v1.0.3 · 2026-10-28
+
+- 🚀 **Self-update Easy yt-dlp**: Added menu option `[0]` to download the latest codebase directly from GitHub Content and smoothly re-enter the menu automatically
+
 ### v1.0.2 · 2026-10-28
 
 - 🐛 **Adapt to yt-dlp update policy**: Intelligently detect whether yt-dlp was installed via pip or standalone binary; update via `pip` when installed with pip and via `-U` when using standalone binaries
